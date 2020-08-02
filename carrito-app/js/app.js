@@ -1,5 +1,5 @@
 ( () => {
-
+    'use strict';
     /*=================================
     =            Variables            =
     =================================*/
@@ -63,6 +63,20 @@
         listaCursos.appendChild(fila);
     }
 
+    //Elimina el curso del carrito en el DOM
+    const eliminarCurso = (e) => {
+
+        e.preventDefault();
+        
+        let curso;
+        if(e.target.classList.contains('borrar-curso')) {
+
+            e.target.parentElement.parentElement.remove();
+
+        }
+
+    }
+
 
     /*=====  End of Functions  ======*/
 
@@ -73,7 +87,10 @@
     ( () => {
 
         //Evento click en Agregar Carrito
-        cursos.addEventListener( 'click', comprarCurso);
+        cursos.addEventListener( 'click', comprarCurso );
+
+        //Evento para eliminar curso del carrito
+        carrito.addEventListener( 'click', eliminarCurso );
 
     })()
 
