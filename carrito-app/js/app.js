@@ -55,6 +55,31 @@
         }
 
     }
+
+    //Eliminado cursos individualmente
+    const eliminarCursoLS = (cursoId) => {
+
+        let cursosLS = obtenerCursosLS();//Obtenemos el array de cursos del carrito.
+        
+        cursosLS.forEach( (curso, indice) => {//Lo recorremos con el forEach
+            //Comparamos el id del curso borrado con los del Local Storage
+            if ( cursoId === curso.id) { 
+                
+                cursosLS.splice( indice, 1);//Si coinciden lo eliminamos del array.
+
+            }
+        });
+        
+        localStorage.setItem( 'cursos', JSON.stringify(cursosLS) ); //Reescribimos el LS
+
+    }
+
+    //Eliminar todos los cursos del Local Storage.
+    const vaciarLS = () => {
+
+        localStorage.clear();
+
+    }
         
     /*=====  End of Local Storage  ======*/
 
@@ -123,12 +148,16 @@
 
         e.preventDefault();
         
-        let curso;
+        let curso, cursoId;
         if(e.target.classList.contains('borrar-curso')) {
 
             e.target.parentElement.parentElement.remove();
+            curso = e.target.parentElement.parentElement;
+            cursoId = curso.querySelector('a').getAttribute('data-id');
 
         }
+
+        eliminarCursoLS(cursoId);
 
     }
 
@@ -141,6 +170,8 @@
             listaCursos.removeChild(listaCursos.firstChild);
 
         }
+
+        vaciarLS();
 
         return false;
 
