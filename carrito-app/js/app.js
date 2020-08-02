@@ -37,14 +37,24 @@
 
     }
 
-
+    //Guarda los cursos en el Local Storage
     const guardarCursoLS = (curso) => {
 
         let cursos = obtenerCursosLS();
         cursos.push(curso);
         localStorage.setItem( 'cursos', JSON.stringify(cursos) );
 
-    }       
+    }
+
+    //Imprime los cursos del Local Storage en el carrito al cargar la página.
+    const leerLS = () => {
+
+        let cursosLS = obtenerCursosLS();
+        for(let curso of cursosLS) {
+            crearDOMCarrito(curso);
+        }
+
+    }
         
     /*=====  End of Local Storage  ======*/
 
@@ -80,8 +90,7 @@
 
     }
 
-    // Muestra el curso seleccionado en el html del carrito mediante DOM
-    const insertarCarrito = (curso) => {
+    const crearDOMCarrito = function (curso) {
 
         const fila = document.createElement('tr');
         fila.innerHTML = `
@@ -99,6 +108,13 @@
             </td>
         `;
         listaCursos.appendChild(fila);//DOM del curso en el carrito.
+    }
+
+    // Muestra el curso seleccionado en el html del carrito mediante DOM Y lo guarda en el LS
+    const insertarCarrito = (curso) => {
+
+        crearDOMCarrito(curso);//Creamos el DOM del carrito
+        
         guardarCursoLS(curso); //guardamos el curso en el Local Storage
     }
 
@@ -147,6 +163,9 @@
 
         //Evento para el botón vaciar carrito
         vaciarCarritoBtn.addEventListener( 'click', vaciarCarrito );
+
+        //Al cargar el documento, mostar los elementos del Local Storage
+        document.addEventListener('DOMContentLoaded', leerLS );
 
     })()
 
