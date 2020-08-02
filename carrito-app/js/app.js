@@ -6,6 +6,7 @@
     const carrito = document.getElementById('carrito');
     const cursos = document.getElementById('lista-cursos');
     const listaCursos = document.querySelector('#lista-carrito tbody');
+    const vaciarCarritoBtn = document.getElementById('vaciar-carrito');
 
 
     /*=====  End of Variables  ======*/
@@ -77,6 +78,20 @@
 
     }
 
+    //Vaciamos el carrito entero del DOM con el Evento del botón vaciar-carrito
+    const vaciarCarrito = (e) => {
+
+        e.preventDefault();
+        while(listaCursos.firstChild) {
+
+            listaCursos.removeChild(listaCursos.firstChild);
+
+        }
+
+        return false;
+
+    }
+
 
     /*=====  End of Functions  ======*/
 
@@ -91,6 +106,9 @@
 
         //Evento para eliminar curso del carrito
         carrito.addEventListener( 'click', eliminarCurso );
+
+        //Evento para el botón vaciar carrito
+        vaciarCarritoBtn.addEventListener( 'click', vaciarCarrito );
 
     })()
 
