@@ -15,6 +15,43 @@
     /*=================================
     =            Functions            =
     =================================*/
+
+    /*=================================
+    =            Local Storage        =
+    =================================*/
+    //Comprobar si hay elementos en el local Storage e inicializarlos si no los hay.
+    const obtenerCursosLS = () => {
+        
+        let cursosLS;
+        if(localStorage.getItem('cursos') === null) {//Si el LS está vacio lo crea
+
+            cursosLS = [];
+
+        }else { //Si no está vacio lee los datos y los almacena en cursosLS
+
+            cursosLS = JSON.parse( localStorage.getItem('cursos') );
+
+        }
+
+        return cursosLS;
+
+    }
+
+
+    const guardarCursoLS = (curso) => {
+
+        let cursos = obtenerCursosLS();
+        cursos.push(curso);
+        localStorage.setItem( 'cursos', JSON.stringify(cursos) );
+
+    }       
+        
+    /*=====  End of Local Storage  ======*/
+
+
+    /*=================================
+    =            DOM            =
+    =================================*/
     const comprarCurso = (e) => { //función que añade el curso al carrito.
 
         e.preventDefault();
@@ -61,7 +98,8 @@
                 <a href="#" class="borrar-curso" data-id="${curso.id}">X</a>
             </td>
         `;
-        listaCursos.appendChild(fila);
+        listaCursos.appendChild(fila);//DOM del curso en el carrito.
+        guardarCursoLS(curso); //guardamos el curso en el Local Storage
     }
 
     //Elimina el curso del carrito en el DOM
@@ -91,7 +129,7 @@
         return false;
 
     }
-
+    /*=====  End of DOM  ======*/
 
     /*=====  End of Functions  ======*/
 
