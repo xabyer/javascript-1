@@ -1,5 +1,5 @@
 ( () => {
-
+    //Project refactor 100% to ES6.
     /*=============================================
     =            Variables and Objects            =
     =============================================*/
@@ -13,10 +13,58 @@
     
 
     // Insurance Objet, ES6 declaration; ES5 function Object Construction (Only with didactic intentions)
-    const Insurance = function (brand, year, type) { 
-        this.brand = brand;
-        this.year = year;
-        this.type = type;
+    class Insurance { 
+        constructor(brand, year, type){
+            this.brand = brand;
+            this.year = year;
+            this.type = type;
+        }
+        quoteInsurance() {
+
+            /* Simulating insurance prices
+                1 = american 1.15
+                2 = asiatic 1.05
+                3 = european 1.35
+            */
+    
+            //Base price
+            const base = 2000;
+            let amount;
+    
+            switch(this.brand){
+                case '1':
+                    amount = base * 1.15;
+                    break;
+                case '2':
+                    amount = base * 1.05;
+                    break;
+                case '3':
+                    amount = base * 1.35;
+                    break;
+            }
+    
+            //Discount based on the age of the vehicle.
+            const difference = new Date().getFullYear() - this.year;
+            
+            //Every year of difference it is necessary to subtract 3% from the insurance amount
+            amount *= ( ( 100 - (difference * 3) ) / 100 );
+    
+            /* 
+                Base => 30% price increase
+                complete => 50% price increase
+            */
+            if(this.type === 'basic') {
+    
+                amount *= 1.30;
+    
+            }else {
+    
+                amount*= 1.50;
+    
+            }
+    
+            return amount;
+        }
     }
 
 
@@ -36,126 +84,71 @@
 
     }
 
-    const Interface = function () {}
+    class Interface {
 
-    //Message that is printed in the HTML
-    Interface.prototype.showMessage = function(msg, type) {
+        showMessage(msg, type) {
 
-        const div = document.createElement('div');
-
-        if( type === 'error') {
-            
-            div.classList.add('message', 'error');
-
-        }else {
-            
-            div.classList.add('message', 'correct');
-
+            const div = document.createElement('div');
+    
+            if( type === 'error') {
+                
+                div.classList.add('message', 'error');
+    
+            }else {
+                
+                div.classList.add('message', 'correct');
+    
+            }
+    
+            div.innerHTML = `${msg}`;
+            insuranceForm.insertBefore(div, document.querySelector('.form-group'));
+            setTimeout( () => {
+    
+                document.querySelector('.message').remove();
+    
+            }, 2000);
+    
         }
 
-        div.innerHTML = `${msg}`;
-        insuranceForm.insertBefore(div, document.querySelector('.form-group'));
-        setTimeout( () => {
+        showResult(insurance, amount){
 
-            document.querySelector('.message').remove();
-
-        }, 3000);
-
-    }
-
-    //Show on screen the amount of the insurance
-    Interface.prototype.showResult = function (insurance, amount){
-
-        let brand;
-        switch(insurance.brand) {
-            case '1':
-                brand = 'American';
-                break;
-            case '2':
-                brand = 'Asiatic';
-                break;
-            case '3':
-                brand = 'European';
-                break;
+            let brand;
+            switch(insurance.brand) {
+                case '1':
+                    brand = 'American';
+                    break;
+                case '2':
+                    brand = 'Asiatic';
+                    break;
+                case '3':
+                    brand = 'European';
+                    break;
+            }
+    
+            const div = document.createElement('div');
+            div.innerHTML = `
+                <p class = "header">Summary</p>
+                <p>Brand : ${brand}</p>
+                <p>Year: ${insurance.year}</p>
+                <p>Type: ${insurance.type}</p>
+                <p>Total: $ ${amount}</p>
+            `;
+    
+            const spinner = document.querySelector('#loading img');
+            spinner.style.display = 'block';
+            setTimeout( () => {
+    
+                spinner.style.display = 'none';
+                result.appendChild(div);
+    
+            }, 2000);
+            
+            
         }
 
-        const div = document.createElement('div');
-        div.innerHTML = `
-            <p class = "header">Summary</p>
-            <p>Brand : ${brand}</p>
-            <p>Year: ${insurance.year}</p>
-            <p>Type: ${insurance.type}</p>
-            <p>Total: $ ${amount}</p>
-        `;
-
-        const spinner = document.querySelector('#loading img');
-        spinner.style.display = 'block';
-        setTimeout( () => {
-
-            spinner.style.display = 'none';
-            result.appendChild(div);
-
-        }, 1000);
-        
-        
     }
     
     /*=====  End of DOM  ======*/
-
-    /*=================================
-    =            Functions            =
-    =================================*/
-    
-    Insurance.prototype.quoteInsurance = function (information) {
-
-        /* Simulating insurance prices
-            1 = american 1.15
-            2 = asiatic 1.05
-            3 = european 1.35
-        */
-
-        //Base price
-        const base = 2000;
-        let amount;
-
-        switch(this.brand){
-            case '1':
-                amount = base * 1.15;
-                break;
-            case '2':
-                amount = base * 1.05;
-                break;
-            case '3':
-                amount = base * 1.35;
-                break;
-        }
-
-        //Discount based on the age of the vehicle.
-        const difference = new Date().getFullYear() - this.year;
-        
-        //Every year of difference it is necessary to subtract 3% from the insurance amount
-        amount *= ( ( 100 - (difference * 3) ) / 100 );
-
-        /* 
-            Base => 30% price increase
-            complete => 50% price increase
-        */
-        if(this.type === 'basic') {
-
-            amount *= 1.30;
-
-        }else {
-
-            amount*= 1.50;
-
-        }
-
-        return amount;
-    }
-    
-    /*=====  End of Functions  ======*/
-
-
 
     /*=================================
     =            Listeners            =
@@ -196,6 +189,7 @@
 
             //Create a insurance instance and show the interface
             const insurance = new Insurance( selectedBrand, selectedYear, insuranceType);
+            console.log(insurance);
             
             //Quote Insurance
             const amount = insurance.quoteInsurance(insurance);
