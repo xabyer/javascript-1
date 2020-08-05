@@ -40,3 +40,8 @@ form {
 #spinner {
     display: none;
 }
+
+input#budget {
+    
+    size: 354px;
+}

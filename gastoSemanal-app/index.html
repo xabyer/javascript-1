@@ -8,12 +8,12 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,400" rel="stylesheet">
     <link rel="stylesheet" href="./css/custom.css">
 
-    <title>Gasto Semanal</title>
+    <title>Weekly Expense</title>
   </head>
   <body>
     <div class="container">
         <header>
-                <h1 class="text-center">Gasto Semanal</h1>
+                <h1 class="text-center">Weekly Expense</h1>
         </header>
         <section class="contenido-principal">
             <div class = "row">
@@ -28,18 +28,18 @@
             <div id ='mainContent' class="row">
                 <div class="col ">
                     <div class="contenido primario">
-                        <h2 class="text-center">Añade tus gastos aqui</h2>
-                            <form id="agregar-gasto" action="#">
+                        <h2 class="text-center">Add your expenses here</h2>
+                            <form id="add-expense" action="#">
                                 <div class="form-group">
-                                    <label for="gasto">Gasto:</label>
-                                    <input type="text" class="form-control" id="gasto" placeholder="Nombre Gasto">
+                                    <label for="expense">Name of purchased item</label>
+                                    <input type="text" class="form-control" id="expense" placeholder="Purchased Item">
                                 </div>
                                 <div class="form-group">
-                                    <label for="cantidad">Cantidad:</label>
-                                    <input type="text" class="form-control" min="1" id="cantidad" placeholder="Cantidad en $">
+                                    <label for="amount">Amount</label>
+                                    <input type="text" class="form-control" min="1" id="amount" placeholder="$ Dollar Amount">
                                 </div>
                                 
-                                <button type="submit" class="btn btn-primary">Agregar</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
                             </form>
                         
                     </div> <!--.contenido-->
@@ -48,9 +48,9 @@
                 <div class="col">
                     <div class="contenido secundario">
                         
-                        <h2 class="text-center">Listado</h2>
+                        <h2 class="text-center">Listing</h2>
 
-                        <div id="gastos">
+                        <div id="expenses">
                             <ul class="list-group"></ul>
                         </div>
                         <div id="presupuesto" class="presupuesto">
