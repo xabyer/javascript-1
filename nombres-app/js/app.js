@@ -51,7 +51,7 @@
 
                 let data = JSON.parse(xhr.responseText);
                 let nombres = data.results;
-                console.log(nombres);
+                
                 //Generamos el DOM
                 let htmlNombres = '<h2>Nombres Generados</h2>';
                 htmlNombres += '<ul class="lista">'
