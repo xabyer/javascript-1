@@ -12,6 +12,13 @@ h1 {
     font-size: 34px;
 }
 
+h2 {
+    color: silver;
+    background-color: rgb(40, 153, 125);
+    text-align: center;
+    font-size: 24px;
+}
+
 form {
     background-color: white;
     padding: 50px;
